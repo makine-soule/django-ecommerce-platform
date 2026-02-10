@@ -1,0 +1,97 @@
+.parent_container_store{
+    height: 95%;
+    background-color: #e5e5e5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+}
+
+.child_container_store{
+    padding: 50px;
+    background-color: white;
+    border-radius: 12px;
+}
+
+#landing_page_h2{
+    color: #808080;
+}
+
+#create_account_button{
+    color: white;
+    background-color: #151b48;
+    padding: 12px;
+    display: inline-block;
+    font-weight: bold;
+    border-radius: 12px;
+}
+
+.child_container_store_products{
+    background-color: #e5e5e5;
+}
+
+#all_products_child_title{
+    margin: 0 100px;
+    margin-bottom: 50px;
+    font-size: 1.5em;
+    padding: 25px 0;
+    display: inline-block;
+    color: #151b48;
+    border-bottom: solid 2px #151b48;
+}
+
+.container_parent_cards{
+    display: flex;
+}
+
+.image-container {
+  width: 200px; /* Remplacez la valeur par celle que vous souhaitez */
+  height: 200px; /* Remplacez la valeur par celle que vous souhaitez */
+  overflow: hidden;
+}
+
+.image-container img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.container_parent_cards {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0 100px;
+  gap: 20px; /* Espacement entre les cards */
+}
+
+.container_card {
+  flex: 1 0 calc(25% - 20px); /* Chaque card occupera 25% de la largeur du conteneur parent avec un espacement de 20px entre les cards */
+  max-width: calc(25% - 20px); /* Limitez la largeur des cards à 25% avec un espacement de 20px */
+  min-width: 250px; /* Largeur minimale de chaque card */
+  background-color: #f0f0f0;
+  padding: 20px;
+    border-radius: 12px;
+  box-sizing: border-box;
+}
+
+/* Ajoutez des règles de média query pour le comportement responsive */
+@media screen and (max-width: 768px) {
+  .container_card {
+    flex: 1 0 calc(50% - 20px); /* Sur les appareils de largeur maximale de 768px, chaque card occupera 50% de la largeur du conteneur parent avec un espacement de 20px entre les cards */
+    max-width: calc(50% - 20px);
+  }
+}
+
+@media screen and (max-width: 480px) {
+  .container_card {
+    flex: 1 0 calc(100% - 20px); /* Sur les appareils de largeur maximale de 480px, chaque card occupera 100% de la largeur du conteneur parent avec un espacement de 20px entre les cards */
+    max-width: calc(100% - 20px);
+  }
+}
+
+#price{
+    color: #151b48;
+}
+
+#title_card{
+    color: black;
+}

@@ -1,0 +1,123 @@
+/*.container_parent_product{*/
+/*    background-color: #e5e5e5;*/
+/*    height: 90%;*/
+/*    padding: 100px;*/
+/*}*/
+
+/*.container_child_product{*/
+/*    padding: 50px;*/
+/*    background-color: white;*/
+/*    border-radius: 12px;*/
+/*}*/
+
+/*.container_child_product_image_information{*/
+/*    display: flex;*/
+/*}*/
+
+/*#buy_button{*/
+/*    padding: 5px;*/
+/*    background-color: dodgerblue;*/
+/*    color: white;*/
+/*    border-radius: 12px;*/
+/*    display: inline-block;*/
+/*}*/
+
+/* CSS */
+
+.container_parent_product {
+  background-color: #e5e5e5;
+  padding: 100px;
+}
+
+.container_child_product {
+  padding: 50px;
+  background-color: white;
+  border-radius: 12px;
+}
+
+.container_child_product_image_information {
+  display: flex;
+}
+
+.image-container {
+  flex: 1;
+}
+
+.image-container img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+  border-radius: 12px;
+}
+
+.information-container {
+  flex: 1;
+  padding-left: 50px;
+}
+
+#add_button {
+  padding: 9px;
+  background: linear-gradient(45deg, #ffa51e, #ff6c00);
+  color: white;
+  border-radius: 8px;
+  display: inline-block;
+  width: auto;
+  font-size: 1.1em;
+  border: none;
+  font-weight: bold;
+  text-align: center;
+  cursor: pointer;
+}
+
+#add_button:hover{
+  padding: 9px;
+  background: linear-gradient(45deg, #ff6c00, #ffa51e);
+  color: white;
+  border-radius: 8px;
+  display: inline-block;
+  width: auto;
+  font-size: 1.1em;
+  border: none;
+  font-weight: bold;
+  text-align: center;
+}
+
+/* Media queries pour ajuster la disposition en mode responsive */
+@media screen and (max-width: 768px) {
+  .container_child_product_image_information {
+    flex-direction: column; /* Disposition en colonne en mode responsive */
+  }
+  .container_parent_product{
+      height: 865px;
+  }
+
+  .image-container,
+  .information-container {
+    padding-left: 0; /* Enlever le padding entre les éléments en mode responsive */
+    flex-basis: 100%; /* Occuper toute la largeur de l'écran en mode responsive */
+  }
+}
+
+.information-container-payement{
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  padding: 8px;
+}
+
+.information-container-payement-top{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.information-container-payement-bottom{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#value_price{
+  font-size: 1.1em;
+  font-weight: bold;
+}
+
