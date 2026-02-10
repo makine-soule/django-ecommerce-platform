@@ -1,0 +1,14 @@
+{% extends 'ecommerce/base.html' %}
+{% block title %}Update Profile{% endblock %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'account/style_update_profile_error.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="container_parent">
+  <div class="container_child">
+    <p><i class="fa fa-exclamation-triangle fa-3x" aria-hidden="true"></i> Error : You are not allowed to edit this profile</p>
+    <br>
+    <a href="{% url 'profile-management' %}"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Back to manage profile</a>
+  </div>
+</div>
+{% endblock %}

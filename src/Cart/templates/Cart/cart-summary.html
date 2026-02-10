@@ -1,0 +1,125 @@
+{% extends 'ecommerce/base.html' %}
+{% block title %}Store{% endblock %}
+{% load static %}
+{% load mathfilters %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'Cart/style_cart-summary.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <div class="container_parent_product">
+    <h1 id="shopping_cart_title">Shopping Cart</h1>
+    {% for item in cart %}
+    {% with product=item.product %}
+    <div class="container_child_product">
+      <div class="container_child_product_image_information">
+        <div class="image-container">
+          <img src="{{ product.image.url }}" alt="image">
+        </div>
+        <div class="information-container">
+          <div class="information-container-payement">
+            <div class="information-container-payement-top">
+              <p id="label_product">Product</p>
+              <a href="{% url 'product-info' product.slug %}"><h3>{{product.title}}</h3></a>
+              <p id="value_price">{{product.price | mul:item.qty}} $</p>
+            </div>
+            <br>
+            <hr>
+            <br>
+            <div class="information-container-payement-bottom">
+              <div class="information-container-payement-bottom-quantity">
+                <label for="list-qty">Quantity</label>
+                <select id="list-qty{{product.id}}">
+                  <option value="{{item.qty}}" selected>{{item.qty}}</option>
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                </select>
+              </div>
+              <div class="information-container-payement-bottom-button">
+                <button id="update_button" class="update_button  button-clickable" data-index="{{product.id}}"><i class="fa fa-pencil-square-o" aria-hidden="true"></i> Update</button>
+                <button id="delete_button" data-index="{{product.id}}" class="delete_button  button-clickable"><i class="fa fa-trash-o" aria-hidden="true"></i> Delete</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% endwith %}
+    <br>
+    <br>
+    {% endfor %}
+    <br>
+    <br>
+    <p id="total_price">Sub total: {{cart.get_total}}$</p>
+    <br>
+    {% with qty_amount=cart|length %}
+        {% if qty_amount > 0 %}
+          <div class="complete_order">
+            <a href="{% url 'checkout' %}">Complete order</a>
+          </div>
+        {% endif %}
+    {% endwith %}
+  </div>
+<script>
+  // Delete button
+
+  $(document).on("click", ".delete_button", function (e){
+    e.preventDefault();
+
+    $.ajax({
+          type: 'POST',
+          url : '{% url "cart-delete" %}',
+          data : {
+          product_id : $(this).data("index"),
+          csrfmiddlewaretoken : "{{csrf_token}}",
+          action : "post"
+          },
+
+          success : function (json){
+            location.reload();
+            document.getElementById("cart_qty").textContent = json.qty;
+            document.getElementById("total").textContent = json.total;
+          },
+
+          error : function(xhr, errmsg, err){
+
+          }
+          });
+          }
+          )
+
+  // Update button
+
+
+  $(document).on("click", ".update_button", function (e){
+    e.preventDefault();
+
+    var theproductid = $(this).data('index');
+
+    $.ajax({
+          type: 'POST',
+          url : '{% url "cart-update" %}',
+          data : {
+          product_id : $(this).data("index"),
+          product_quantity: $("#list-qty" + theproductid + " option:selected").text(),
+          csrfmiddlewaretoken : "{{csrf_token}}",
+          action : "post"
+          },
+
+          success : function (json){
+            location.reload();
+            document.getElementById("cart_qty").textContent = json.qty;
+            document.getElementById("total").textContent = json.total;
+          },
+
+          error : function(xhr, errmsg, err){
+
+          }
+          });
+          }
+          )
+</script>
+{% endblock %}

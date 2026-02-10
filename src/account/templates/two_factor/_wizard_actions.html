@@ -1,0 +1,24 @@
+{% load i18n %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'account/style_login.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+<br>
+
+{% if cancel_url %}
+  <a href="{% url 'secure-account' %}" id="cancel_link">{% trans "Cancel" %}</a>
+{% endif %}
+
+
+{% if wizard.steps.prev %}
+  <button name="wizard_goto_step" type="submit"
+          value="{{ wizard.steps.prev }}"
+          id="back_link"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> {% trans "Back" %}</button>
+{% else %}
+
+   <!-- <button disabled name="" type="button" class="btn">{% trans "Back" %}</button> -->
+
+{% endif %}
+<div class="container_child_button">
+    <button type="submit" class="btn btn-info">{% trans "Proceed" %}</button>
+</div>

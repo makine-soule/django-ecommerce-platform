@@ -1,0 +1,190 @@
+{% extends 'ecommerce/base.html' %}
+{% block title %}Manage Shipping{% endblock %}
+{% load static %}
+{% block content %}
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link rel="stylesheet" href="{% static 'account/style_manage-shipping.css' %}">
+  <div class="container_parent">
+    <div class="container_child">
+      <a id="back-link" href="{% url 'cart-summary' %}"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Back</a>
+      <h1>Complete Order</h1>
+      <form method="POST" onsubmit="event.preventDefault();">
+        {% csrf_token %}
+        {{form.as_p}}
+<!--        <br>-->
+<!--        <div class="container_submit_button">-->
+<!--          <button class="submit_button_form" type="submit"><i class="fa fa-check-circle" aria-hidden="true"></i> Complete order</button>-->
+<!--        </div>-->
+
+        <!-- Paypal -->
+
+        <div id="paypal-button-container"></div>
+
+        <script data-sdk-integration-source="integrationbuilder_sc"
+                src="https://www.paypal.com/sdk/js?client-id=AV_oXT9ZYmxZHhYv7xOLVXz43GV1Z2cTnUlAOkv5RycRMewG4HwblI3MiRrgt18P1fvGgfrZb5pAsy_1&amp;currency=USD&amp;intent=capture&enable-funding=venmo"></script>
+
+        <!-- Set up a container element for the button -->
+      </form>
+
+    </div>
+  </div>
+
+<script>
+  // total price
+  var total_price = '{{cart.get_total}}'
+
+  const paypalButtonsComponent = paypal.Buttons({
+        // optional styling for buttons
+        // https://developer.paypal.com/docs/checkout/standard/customize/buttons-style-guide/
+        style: {
+          color: "silver",
+          shape: "rect",
+          layout: "vertical"
+        },
+
+
+        // onInit is called when the button first renders
+
+        onInit: function(data, actions) {
+
+      // Disable the buttons
+      actions.disable();
+
+      // Complete Order - No shipping (0 information about the user)
+
+      // Our goal it's to check if all fields are field out
+      document.querySelectorAll(".validate").forEach(item => {
+        item.addEventListener("keyup", event => {
+          // The required fields are field out !
+          var order_verified = "Yes";
+
+
+          // We're going to check if all the fields with the validate class are field out
+          function checkinputs(){
+            $(":input[required]").each(function (){
+              // The required fields are empty ...
+              if($(this).val() == ''){
+                return order_verified = "No";
+              }
+            });
+
+            return order_verified;
+
+          }
+          var isOrderVerified = checkinputs();
+
+          if(isOrderVerified === "Yes"){
+            actions.enable();
+          }
+          else{
+            actions.disable();
+          }
+
+        });
+      });
+
+      // Complete order - With shipping (if the user already have some information saved)
+      // The required fields are field out !
+          var order_verified = "Yes";
+
+
+          // We're going to check if all the fields with the validate class are field out
+          function checkinputs(){
+            $(":input[required]").each(function (){
+              // The required fields are empty ...
+              if($(this).val() == ''){
+                return order_verified = "No";
+              }
+            });
+
+            return order_verified;
+
+          }
+          var isOrderVerified = checkinputs();
+
+          if(isOrderVerified === "Yes"){
+            actions.enable();
+          }
+          else{
+            actions.disable();
+          }
+
+      },
+
+        // set up the transaction
+        createOrder: (data, actions) => {
+            // pass in any options from the v2 orders create call:
+            // https://developer.paypal.com/api/orders/v2/#orders-create-request-body
+            const createOrderPayload = {
+                purchase_units: [
+                    {
+                        amount: {
+                            value: total_price
+                        }
+                    }
+                ]
+            };
+
+            return actions.order.create(createOrderPayload);
+        },
+
+        // finalize the transaction
+        onApprove: (data, actions) => {
+            const captureOrderHandler = (details) => {
+                const payerName = details.payer.name.given_name;
+                console.log('Transaction completed');
+
+                  //Ajax functionality
+                  $.ajax({
+                    type: 'POST',
+                    url : '{% url "complete-order" %}',
+                    data : {
+                      // fields
+                      name : $("#id_full_name").val(),
+                      email : $("#id_email").val(),
+                      address1 : $("#id_address1").val(),
+                      address2 : $("#id_address2").val(),
+                      city : $("#id_city").val(),
+                      state : $("#id_state").val(),
+                      zipcode : $("#id_zipcode").val(),
+                      csrfmiddlewaretoken : "{{csrf_token}}",
+                      action : "post"
+                    },
+
+                    success : function (json){
+                      window.location.replace("{% url 'payment-success' %}")
+                    },
+
+                    error : function(xhr, errmsg, err){
+                      window.location.replace("{% url 'payment-failed' %}")
+                    }
+                  });
+
+            };
+
+            return actions.order.capture().then(captureOrderHandler);
+        },
+
+        // handle unrecoverable errors
+        onError: (err) => {
+            console.error('An error prevented the buyer from checking out with PayPal');
+
+
+
+        }
+    });
+
+    paypalButtonsComponent
+        .render("#paypal-button-container")
+        .catch((err) => {
+            console.error('PayPal Buttons failed to render');
+  });
+
+  // // Complete checkout
+  $(document).on("submit", function (e){
+  e.preventDefault();
+
+        }
+        )
+</script>
+{% endblock %}

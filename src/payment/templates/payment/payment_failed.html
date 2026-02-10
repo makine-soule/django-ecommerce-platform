@@ -1,0 +1,24 @@
+{% extends 'ecommerce/base.html' %}
+{% block title %}Payment Success{% endblock %}
+{% load static %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'payment/style_payment_failed.css' %}">
+    <div class="container_parent">
+        <div class="container_child">
+            <h1>Payment Failed</h1>
+            <br>
+            <p><i class="fa fa-times-circle-o fa-2x" aria-hidden="true"></i></p>
+            <br>
+            <div class="text_below">
+                <div class="text_below">
+                    <h3>Sorry, your payment did not go through. <br> Please try again later or contact customer support for assistance.</h3>
+                </div>
+            </div>
+            <br>
+            <hr>
+            <br>
+            <a id="back_store" href="{% url 'cart-summary' %}"><i class="fa fa-shopping-cart" aria-hidden="true"></i> Get back to your cart</a>
+        </div>
+    </div>
+{% endblock %}

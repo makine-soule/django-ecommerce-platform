@@ -1,0 +1,19 @@
+{% extends 'ecommerce/base.html' %}
+{% block title %}Account verification{% endblock %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'register/style_email_verification_sent.css' %}">
+<div class="container_parent">
+    <div class="container_child">
+        <i class="fa fa-times fa-3x" aria-hidden="true"></i>
+        <br>
+        <br>
+        <h1>Your account has not been verified</h1>
+        <br>
+        <hr>
+        <br>
+        <p>Please retry</p>
+    </div>
+</div>
+{% endblock %}

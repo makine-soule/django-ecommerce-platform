@@ -1,0 +1,33 @@
+{% extends 'ecommerce/base.html' %}
+{% block title %}Update Account{% endblock %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'account/style_management.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="container_parent">
+  <div class="container_child">
+    <a id="back-link" href="{% url 'dashboard' %}"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Back</a>
+    <br>
+    <br>
+    <h1><i class="fa fa-user-circle-o fa-2x" aria-hidden="true"></i><br>Profile management</h1>
+    <br>
+    <h2>Delete your account ?</h2>
+    <br>
+    <a id="button_delete" href="{% url 'delete-management' %}"><i class="fa fa-user-times" aria-hidden="true"></i> Delete</a>
+    <br>
+    <br>
+    <hr>
+    <br>
+    <h2>Update your account ?</h2>
+    <br>
+    <a id="button_update" href="{% url 'update-account' %}"><i class="fa fa-pencil" aria-hidden="true"></i> Update</a>
+    <br>
+    <br>
+    <hr>
+    <br>
+    <h2>Secure your account ?</h2>
+    <br>
+    <a id="button_secure" href="{% url 'secure-account' %}"><i class="fa fa-cogs" aria-hidden="true"></i> Secure</a>
+  </div>
+</div>
+{% endblock %}

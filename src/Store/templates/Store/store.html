@@ -1,0 +1,33 @@
+{% extends 'ecommerce/base.html' %}
+{% block title %}Store{% endblock %}
+{% load static %}
+{% block content %}
+    <link rel="stylesheet" href="{% static 'store/style_store.css' %}">
+    <div class="parent_container_store">
+        <div class="child_container_store">
+            <h1 id="landing_page_h1">Ecommerce...Simplicity at it's finest.</h1>
+            <br>
+            <h2 id="landing_page_h2">Browse our extensive collection</h2>
+            <br>
+            <a id="create_account_button" href="#"><i class="fa fa-user-plus" aria-hidden="true"></i> Create an account</a>
+        </div>
+    </div>
+    <div class="child_container_store_products">
+        <div class="all_products_container_title">
+            <h2 id="all_products_child_title">All products</h2>
+        </div>
+        <div class="container_parent_cards">
+            {% for product in products %}
+                <div class="container_card">
+                    <div class="image-container">
+                        <img src="{{ product.image.url }}" alt="image">
+                    </div>
+                        <br>
+                        <br>
+                        <h3><a id="title_card" href="{% url 'product-info' product.slug %}">{{product.title}}</a></h3>
+                        <h2 id="price">{{product.price}}$</h2>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+{% endblock %}

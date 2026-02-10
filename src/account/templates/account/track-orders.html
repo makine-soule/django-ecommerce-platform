@@ -1,0 +1,30 @@
+{% extends 'ecommerce/base.html' %}
+{% block title %}Track Orders{% endblock %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'account/style_track-orders.css' %}">
+<div class="container_parent">
+    <div class="container_child">
+        <a id="back-link" href="{% url 'dashboard' %}"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Back</a>
+        <br>
+        <br>
+        <h1><i class="fa fa-list-alt" aria-hidden="true"></i> - My orders</h1>
+        <br>
+        {% for order in orders %}
+            <hr>
+            <br>
+            <h2><i class="fa fa-calendar" aria-hidden="true"></i> Date of purchase : </h2>
+            <p>{{order.date_ordered}}</p>
+            <br>
+            <p>Sub total : {{order.amount_paid}}$</p>
+            <br>
+            <div class="container_more">
+                <a id="more" href="{% url 'track-orders-detail' order.pk %}"><i class="fa fa-plus" aria-hidden="true"></i> More information</a>
+            </div>
+            <br>
+            <br>
+        {% endfor %}
+
+    </div>
+</div>
+{% endblock %}

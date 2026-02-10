@@ -1,0 +1,29 @@
+
+<!-- Default source code -->
+
+<!--<table class="mb-3">
+  {{ wizard.management_form }}
+  {{ wizard.form.as_table }}
+</table> -->
+
+<!-- Updated with tags -->
+
+{% load my_tag %}
+{% load static %}
+<link rel="stylesheet" href="{% static 'account/style_login.css' %}">
+
+  {{ wizard.management_form }}
+
+  <br>
+  <div class="container-parent">
+    <div class="container-child">
+
+  {% for attr in wizard.form %}
+
+    <label class="form-label"> {{ attr.label }} </label>
+
+    {{attr | insert_classes:'form-control mb-1 account-form'}}
+
+  {% endfor %}
+  </div>
+</div>

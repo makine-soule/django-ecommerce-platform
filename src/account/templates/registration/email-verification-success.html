@@ -1,0 +1,18 @@
+{% extends 'ecommerce/base.html' %}
+{% block title %}Account verification{% endblock %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'register/style_email_verification_sent.css' %}">
+<div class="container_parent">
+    <div class="container_child">
+        <i class="fa fa-check fa-3x" aria-hidden="true"></i>
+        <br>
+        <br>
+        <h1>Your account is now activate ! </h1>
+        <div class="profile_management_link">
+            <a href="{% url 'dashboard' %}"><i class="fa fa-check-circle" aria-hidden="true"></i> Finish</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

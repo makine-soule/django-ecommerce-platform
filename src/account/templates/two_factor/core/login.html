@@ -1,0 +1,87 @@
+{% extends "two_factor/_base_focus.html" %}
+{% load i18n %}
+{% load my_tag %}
+{% load static %}
+<!--{% load two_factor_tags %}-->
+{% block extra_media %}
+{{ form.media }}
+{% endblock %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'account/style_login.css' %}">
+{% if form.errors %}
+ <div class="alert_error">
+  <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+  {{form.non_field_errors}}
+</div>
+{% endif %}
+{% if messages %}
+<div class="alert_logged_out">
+    {% for message in messages %}
+        <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+        {{message}}
+    {% endfor %}
+</div>
+{% endif %}
+<div class="container_parent_login">
+    <div class="container_child_login">
+  <h1>{% block title %}{% trans "Login" %}{% endblock %}</h1>
+
+  {% if wizard.steps.current == 'auth' %}
+    <p>{% blocktrans %}Enter your credentials.{% endblocktrans %}</p>
+  {% elif wizard.steps.current == 'token' %}
+    <p>{{ device|as_verbose_action }}</p>
+  {% elif wizard.steps.current == 'backup' %}
+    <p>{% blocktrans trimmed %}Use this form for entering backup tokens for logging in.
+      These tokens have been generated for you to print and keep safe. Please
+      enter one of these backup tokens to login to your account.{% endblocktrans %}</p>
+  {% endif %}
+    <br>
+    <hr>
+  <form action="" method="post">
+    {% csrf_token %}
+    {% include "two_factor/_wizard_forms.html" %}
+    {# hidden submit button to enable [enter] key #}
+    <input type="submit" value="" hidden />
+    {% if other_devices %}
+      <p>{% trans "Or, alternatively, use one of your other authentication methods:" %}</p>
+      <p>
+        {% for other in other_devices %}
+        <button name="challenge_device" value="{{ other.persistent_id }}"
+                class="btn btn-secondary btn-block" type="submit">
+          {{ other|as_action }}
+        </button>
+      {% endfor %}</p>
+
+
+    {% endif %}
+
+    {% include "two_factor/_wizard_actions.html" %}
+  <div class="container_child_button">
+    <br>
+    <a href="{% url 'reset-password' %}" id="reset_password_link"><i class="fa fa-key" aria-hidden="true"></i> Have you forgotten your password ?</a>
+    <br>
+    <a id="link_login_signup"href="{% url 'signup-user' %}">Don't have an account ?</a>
+  </div>
+  </form>
+
+  {% block 'backup_tokens' %}
+    {% if backup_tokens %}
+      
+       <div class="backup_tokens_form">
+       <form action="" method="post">
+           {% csrf_token %}
+           <hr> 
+            <p>{% trans "As a last resort, you can use a backup token:" %}</p>
+            <p>
+                <button name="wizard_goto_step" type="submit" value="backup"
+                    class="btn btn-info btn-secondary btn-block">{% trans "Use Backup Token" %}</button>
+            </p>
+  
+
+       </form>
+       </div>
+    {% endif %}
+  {% endblock %}
+</div>
+</div>
+{% endblock %}

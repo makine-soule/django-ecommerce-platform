@@ -1,0 +1,23 @@
+{% extends 'ecommerce/base.html' %}
+{% block title %}Payment Success{% endblock %}
+{% load static %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'payment/style_payment_success.css' %}">
+    <div class="container_parent">
+        <div class="container_child">
+            <h1>Congratulations! <br> Your payment went well</h1>
+            <br>
+            <p><i class="fa fa-check-circle-o fa-2x" aria-hidden="true"></i></p>
+            <br>
+            <div class="text_below">
+                <h3>If you wish to make further purchases, <br> or if you wish to consult other articles that may be of interest to you,
+                <br> you may return to the articles.</h3>
+            </div>
+            <br>
+            <hr>
+            <br>
+            <a id="back_store" href="{% url 'store' %}"><i class="fa fa-arrow-right" aria-hidden="true"></i> Get back to the store !</a>
+        </div>
+    </div>
+{% endblock %}

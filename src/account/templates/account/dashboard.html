@@ -1,0 +1,36 @@
+{% extends 'ecommerce/base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'account/style_dashboard.css' %}">
+<div class="container_parent">
+    <div class="container_child">
+        <h1>Hi <span>{{user}}</span>,</h1>
+        <h2>We are so happy to see you again ^^</h2>
+        <br>
+        <br>
+        <div class="client_orders">
+            <h2>Track your orders</h2>
+            <hr>
+            <br>
+            <a href="{% url 'track-orders' %}">My orders</a>
+        </div>
+        <br>
+        <br>
+        <div class="profil_account">
+            <h2>Manage your account</h2>
+            <hr>
+            <br>
+            <a href="{% url 'profile-management' %}">Profil management</a>
+        </div>
+        <br>
+        <br>
+        <div class="manage_shipping">
+            <h2>Manage your account</h2>
+            <hr>
+            <br>
+            <a href="{% url 'manage-shipping' %}">Manage shipping</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

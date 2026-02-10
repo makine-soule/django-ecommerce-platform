@@ -1,0 +1,77 @@
+{% extends 'ecommerce/base.html' %}
+{% block title %}Store{% endblock %}
+{% load static %}
+{% block content %}
+  <link rel="stylesheet" href="{% static 'store/style_product.css' %}">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <div class="container_parent_product">
+    <div class="container_child_product">
+      <h1>{{product.title}}</h1>
+      <div class="container_child_product_image_information">
+        <div class="image-container">
+          <img src="{{ product.image.url }}" alt="image">
+        </div>
+        <div class="information-container">
+          <h2>Description</h2>
+          <br>
+          <p>{{product.description}}</p>
+          <br>
+          <br>
+          <div class="information-container-payement">
+            <div class="information-container-payement-top">
+              <p id="label_price">Price</p>
+              <p id="value_price">{{product.price}} $</p>
+            </div>
+            <br>
+            <hr>
+            <br>
+            <div class="information-container-payement-bottom">
+              <div class="information-container-payement-bottom-quantity">
+                <label for="list-qty">Quantity</label>
+                <select id="list-qty">
+                  <option value="1">1</option>
+                  <option value="2">2</option>
+                  <option value="3">3</option>
+                  <option value="4">4</option>
+                  <option value="5">5</option>
+                  <option value="6">6</option>
+                  <option value="7">7</option>
+                </select>
+              </div>
+              <div class="information-container-payement-bottom-button">
+                <button id="add_button" value="{{product.id}}"><i class="fa fa-cart-plus" aria-hidden="true"></i> Add cart</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  $(document).on("click", "#add_button", function (e){
+    e.preventDefault();
+
+    $.ajax({
+          type: 'POST',
+          url : '{% url "cart-add" %}',
+          data : {
+          product_id : $("#add_button").val(),
+          product_quantity : $("#list-qty option:selected").text(),
+          csrfmiddlewaretoken : "{{csrf_token}}",
+          action : "post"
+          },
+
+          success : function (json){
+            location.reload();
+            document.getElementById("cart_qty").textContent = json.qty;
+          },
+
+          error : function(xhr, errmsg, err){
+
+          }
+          });
+          }
+          )
+</script>
+{% endblock %}

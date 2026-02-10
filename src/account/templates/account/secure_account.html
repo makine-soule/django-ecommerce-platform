@@ -1,0 +1,19 @@
+{% extends 'ecommerce/base.html' %}
+{% block title %}Security Account{% endblock %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="{% static 'account/style_secure_account.css' %}">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<div class="container_parent">
+  <div class="container_child">
+      <a id="back-link" href="{% url 'profile-management' %}"><i class="fa fa-long-arrow-left" aria-hidden="true"></i> Back</a>
+      <br>
+      <br>
+      <h1>Manage the security of your account</h1>
+      <a class="dashboard_button" href="{% url 'two_factor:setup' %}">ENABLE 2FA</a>
+      <br>
+      <br>
+      <a class="dashboard_button" href="{% url 'two_factor:profile' %}">2FA account settings</a>
+  </div>
+</div>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'ecommerce/base.html' %}
+{% block title %}Signup{% endblock %}
+{% load static %}
+{% block content %}
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="{% static 'register/style_signup.css' %}">
+    <div class="container_parent">
+        <div class="container_child">
+            <h2>Signup</h2>
+            <form method="POST">
+                {% csrf_token %}
+                {{form.as_p}}
+                <div class="button_submit">
+                    <button type="submit"><i class="fa fa-plus" aria-hidden="true"></i> Create an account</button>
+                    <br>
+                    <br>
+                    <a id="link_login_signup" href="{% url 'two_factor:login' %}">Already have an account ?</a>
+                </div>
+            </form>
+        </div>
+    </div>
+{% endblock %}
